@@ -21,7 +21,15 @@ export function meta({}:Route.MetaArgs){
   ]
 }
 const Home = () => {
-  console.log('Hello from home')
+  // console.log('Hello from home')
+  const now = new Date().toISOString();
+
+  if(typeof window === 'undefined'){
+    console.log('Server render at ', now)
+  }
+  else{
+    console.log('Client render at', now);
+  }
   return <>Hello</>;
 };
 
