@@ -1,7 +1,7 @@
 // import type { Route } from "./+types/home";
 // import { Welcome } from "../welcome/welcome";
-
-import type { Route } from "./+types/home";
+// import Hero from "~/components/Hero";
+import type { Route } from "./+types/index";
 
 // export function meta({}: Route.MetaArgs) {
 //   return [
@@ -22,15 +22,12 @@ export function meta({}:Route.MetaArgs){
 }
 const Home = () => {
   // console.log('Hello from home')
-  const now = new Date().toISOString();
-
-  if(typeof window === 'undefined'){
-    console.log('Server render at ', now)
-  }
-  else{
-    console.log('Client render at', now);
-  }
-  return <>Hello</>;
+  return(
+    <>
+      {/* <Hero name="Jeetu"/> */}
+      HomePage
+    </>
+  )
 };
 
 export default Home;
