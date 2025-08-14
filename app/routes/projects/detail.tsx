@@ -2,6 +2,7 @@ import type { Route } from "./+types/detail";
 import type { Project } from "~/types";
 import { FaArrowLeft } from "react-icons/fa";
 import { Link } from "react-router";
+import { useState } from "react";
 
 
 export async function clientLoader({request, params}:Route.ClientLoaderArgs) {
@@ -19,6 +20,7 @@ export function HydrateFallback(){
 }
 const ProjectDetailPage = ({loaderData}: Route.ComponentProps) => {
 
+
     const project = loaderData;
     // console.log(loaderData);
     return ( 
@@ -29,9 +31,9 @@ const ProjectDetailPage = ({loaderData}: Route.ComponentProps) => {
             >
                 <FaArrowLeft/> Back to Projects
             </Link>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8  ">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div>
-                    <img className="w-full rounded-lg shadow-md" src={project.image} alt={project.title} />
+                    <img className="w-full rounded-lg shadow-md object-cover " src={project.image} alt={project.title} />
                 </div>
                 <div>
                     <h1 className="text-3xl font-bold text-blue-300 mb-4">{project.title}</h1>
