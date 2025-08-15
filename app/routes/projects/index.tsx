@@ -14,22 +14,46 @@ export async function loader({
 }
 
 const ProjectsPage = ({ loaderData }: Route.ComponentProps) => {
-  const { projects } = loaderData as { projects: Project[] };
-
   // states
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
+  const { projects } = loaderData as { projects: Project[] };
+  const categories = [
+    "All",
+    ...new Set(projects.map((project) => project.category)),
+  ];
+
+  //Filter Projects based on categories
+  const filterProjects =
+    selectedCategory === "All"
+      ? projects
+      : projects.filter((project) => project.category === selectedCategory);
+
+  // Page Related variables
   const projectsPerPage = 5;
-  const totalProjects = projects.length;
+  const totalProjects = filterProjects.length;
   const totalPages = Math.ceil(totalProjects / projectsPerPage);
 
   const endIndex = currentPage * projectsPerPage;
   const startIndex = endIndex - projectsPerPage;
 
-  const projectsAtCurrentPage = projects.slice(startIndex, endIndex);
+  const projectsAtCurrentPage = filterProjects.slice(startIndex, endIndex);
 
   return (
     <>
-      <h2 className="mb-8 text-3xl font-bold text-center">Projects</h2>
+      <h2 className="mb-8 text-3xl font-bold">Projects</h2>
+      <div className="flex mb-10 gap-2">
+        {categories.map((category)=>(
+          <button 
+            key={category}
+            className={`px-3 py-1 rounded ${category === selectedCategory ? 'bg-blue-500 text-white' : 'bg-gray-800 text-gray-300 hover:bg-blue-500 hover:text-white transition cursor-pointer'} `}
+            onClick={()=>setSelectedCategory(category)}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
       <div className="grid sm:grid-cols-2 gap-6">
         {projectsAtCurrentPage.map((project) => (
           <ProjectCard project={project} key={project.id} />
