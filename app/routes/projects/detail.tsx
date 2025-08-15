@@ -4,6 +4,12 @@ import { FaArrowLeft } from "react-icons/fa";
 import { Link } from "react-router";
 import { useState } from "react";
 
+export function meta({}:Route.MetaArgs){
+  return[
+    {title: "The Friendly dev | Project"},
+    {name: "description", content: "My website project portfolio"}
+  ]
+}
 
 export async function clientLoader({request, params}:Route.ClientLoaderArgs) {
 

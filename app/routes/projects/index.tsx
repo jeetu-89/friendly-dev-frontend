@@ -3,6 +3,7 @@ import type { Project } from "~/types";
 import ProjectCard from "~/components/ProjectCard";
 import { useState } from "react";
 import Pagination from "~/components/Pagination";
+import { AnimatePresence, motion } from "framer-motion";
 
 export async function loader({
   request,
@@ -44,21 +45,26 @@ const ProjectsPage = ({ loaderData }: Route.ComponentProps) => {
     <>
       <h2 className="mb-8 text-3xl font-bold">Projects</h2>
       <div className="flex mb-10 gap-2">
-        {categories.map((category)=>(
-          <button 
+        {categories.map((category) => (
+          <button
             key={category}
-            className={`px-3 py-1 rounded ${category === selectedCategory ? 'bg-blue-500 text-white' : 'bg-gray-800 text-gray-300 hover:bg-blue-500 hover:text-white transition cursor-pointer'} `}
-            onClick={()=>setSelectedCategory(category)}
+            className={`px-3 py-1 rounded ${category === selectedCategory ? "bg-blue-500 text-white" : "bg-gray-800 text-gray-300 hover:bg-blue-500 hover:text-white transition cursor-pointer"} `}
+            onClick={() => setSelectedCategory(category)}
           >
             {category}
           </button>
         ))}
       </div>
-      <div className="grid sm:grid-cols-2 gap-6">
-        {projectsAtCurrentPage.map((project) => (
-          <ProjectCard project={project} key={project.id} />
-        ))}
-      </div>
+
+      <AnimatePresence mode="wait">
+        <motion.div layout className="grid sm:grid-cols-2 gap-6">
+          {projectsAtCurrentPage.map((project) => (
+            <motion.div key={project.id} layout>
+              <ProjectCard project={project} />
+            </motion.div>
+          ))}
+        </motion.div>
+      </AnimatePresence>
       <Pagination
         totalPages={totalPages}
         currentPage={currentPage}
