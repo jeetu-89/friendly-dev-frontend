@@ -4,6 +4,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import { Link } from "react-router";
 import { useState } from "react";
 
+const API_URL = import.meta.env.VITE_API_URL;
 export function meta({}:Route.MetaArgs){
   return[
     {title: "The Friendly dev | Project"},
@@ -13,7 +14,7 @@ export function meta({}:Route.MetaArgs){
 
 export async function clientLoader({request, params}:Route.ClientLoaderArgs) {
 
-    const res = await fetch(`http://localhost:8000/projects/${params.id}`);
+    const res = await fetch(`${API_URL}/projects/${params.id}`);
     if(!res.ok) throw new Response('Project not found', {status: 404});
 
     const project:Project = await res.json();
