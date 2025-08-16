@@ -6,6 +6,7 @@ import type { Project } from "~/types";
 
 import ProjectCard from "~/components/ProjectCard";
 import FeaturedProjects from "~/components/FeaturedProjects";
+import AboutPreview from "~/components/AboutPreview";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -31,6 +32,7 @@ const Home = ({loaderData}:Route.ComponentProps) => {
   return (
     <>
       <FeaturedProjects projects={projects} count={2}/>
+      <AboutPreview />
     </>
   );
 };
