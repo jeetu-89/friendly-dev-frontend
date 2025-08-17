@@ -14,3 +14,11 @@ export type PaginationProps = {
   currentPage: number;
   onPageChange: (page: number) => void;
 };
+
+export type PostMeta = {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  date: string;
+}
