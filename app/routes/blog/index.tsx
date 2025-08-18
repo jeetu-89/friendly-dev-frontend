@@ -4,7 +4,7 @@ import type { PostMeta } from "~/types";
 
 import { Link } from "react-router";
 import PostList from "~/components/PostList";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Pagination from "~/components/Pagination";
 import PostFilter from "~/components/PostFilter";
 
@@ -29,22 +29,27 @@ const BlogPage = ({ loaderData }: Route.ComponentProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const posts = loaderData.posts;
+  const [posts, setPosts] = useState(loaderData.posts);
+  const allPosts = useRef(loaderData.posts);
 
-  const filteredPosts = posts.filter(
-    (post) =>
-      post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      post.excerpt.toLocaleLowerCase().includes(searchQuery.toLocaleLowerCase())
-  );
+  useEffect(()=>{
+    const filteredPosts: PostMeta[] = allPosts.current.filter(
+      (post) =>
+        post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        post.excerpt.toLocaleLowerCase().includes(searchQuery.toLocaleLowerCase())
+    );
+    setPosts(filteredPosts);
+    
+  }, [searchQuery, allPosts])
 
-  const totalPosts = filteredPosts.length;
+  const totalPosts = posts.length;
   const postsPerPage = 10;
   const totalPages = Math.ceil(totalPosts / postsPerPage);
 
   const indexOfLast = currentPage * postsPerPage;
   const indexOfFirst = indexOfLast - postsPerPage;
 
-  const postsOnPerticularPage = filteredPosts.slice(indexOfFirst, indexOfLast);
+  const postsOnPerticularPage = posts.slice(indexOfFirst, indexOfLast);
   // console.log(posts)
   return (
     <div className="bg-gray-900 max-w-3xl mx-auto p-6 mt-10">
@@ -56,7 +61,7 @@ const BlogPage = ({ loaderData }: Route.ComponentProps) => {
           setCurrentPage(1);
         }}
       />
-      {filteredPosts.length === 0 ? (
+      {posts.length === 0 ? (
         <p className="text-gray-400 text-center">No posts found</p>
       ) : (
         <PostList posts={postsOnPerticularPage} />
