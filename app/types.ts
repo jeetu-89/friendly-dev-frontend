@@ -21,4 +21,9 @@ export type PostMeta = {
   slug: string;
   excerpt: string;
   date: string;
-}
+};
+
+export type BlogPageDetailPageProps = {
+  postMeta: PostMeta;
+  markDown: string;
+};

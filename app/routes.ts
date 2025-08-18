@@ -10,6 +10,7 @@ export default [
   layout("./routes/layouts/main.tsx", [
     route("contact", "routes/contact/index.tsx"),
     route("blog", "routes/blog/index.tsx"),
+    route("/blog/:slug", "routes/blog/detail.tsx"),
     route("about", "routes/about/index.tsx"),
     route("projects", "routes/projects/index.tsx"),
     route("projects/:id", "routes/projects/detail.tsx"),

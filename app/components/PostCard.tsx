@@ -8,7 +8,7 @@ const PostCard: React.FC<{ post: PostMeta }> = ({ post }) => {
       <h3 className="text-xl font-semibold text-blue-400 ">{post.title}</h3>
 
       <p className="text-sm text-gray-400 mb-2">
-        {new Date(post.date).toLocaleDateString()}
+        {new Date(post.date).toDateString()}
       </p>
 
       <p className="text-gray-200 mb-2">{post.excerpt}</p>
