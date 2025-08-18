@@ -2,9 +2,10 @@
 // import { Welcome } from "../welcome/welcome";
 // import Hero from "~/components/Hero";
 import type { Route } from "./+types/index";
-import type { Project } from "~/types";
+import type { Project } from "~/types";    
+import type { PostMeta } from "~/types";
 
-import ProjectCard from "~/components/ProjectCard";
+import LatestPosts from "~/components/LatestPosts";
 import FeaturedProjects from "~/components/FeaturedProjects";
 import AboutPreview from "~/components/AboutPreview";
 
@@ -12,10 +13,22 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 export async function loader({
   request,
-}: Route.LoaderArgs): Promise<{ projects: Project[] }> {
-  const res = await fetch(`${API_URL}/projects`);
-  const data = await res.json();
-  return { projects: data };
+}: Route.LoaderArgs): Promise<{ projects: Project[], posts: PostMeta[] }> {
+
+  const url = new URL("/posts-meta.json", request.url);
+
+  const [projectsRes, postsRes] = await Promise.all([
+    fetch(`${API_URL}/projects`),
+    fetch(url.href)
+  ])
+
+  if(!projectsRes || !postsRes) throw new Error("Failed to fetch data!");
+
+  const [projects, posts] = await Promise.all([
+    projectsRes.json(),
+    postsRes.json()
+  ])
+  return { projects, posts };
 }
 
 export function meta({}: Route.MetaArgs) {
@@ -26,12 +39,13 @@ export function meta({}: Route.MetaArgs) {
 }
 const Home = ({loaderData}:Route.ComponentProps) => {
 
-  const {projects} = loaderData as {projects: Project[]};
+  const {projects, posts} = loaderData;
   // const featuredProjects = projects.filter((project)=> project.featured === true)
 
   return (
     <>
       <FeaturedProjects projects={projects} count={2}/>
+      <LatestPosts posts={posts} limit={5} />
       <AboutPreview />
     </>
   );

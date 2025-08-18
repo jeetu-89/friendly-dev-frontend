@@ -65,6 +65,7 @@ const BlogPage = ({ loaderData }: Route.ComponentProps) => {
         <p className="text-gray-400 text-center">No posts found</p>
       ) : (
         <PostList posts={postsOnPerticularPage} />
+        
       )}
 
       <Pagination

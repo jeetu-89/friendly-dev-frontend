@@ -12,7 +12,7 @@ const FeaturedProjects = ({ projects, count = 4 }: FeaturedProjectsProps) => {
     .slice(0, count);
   return (
     <section>
-      <div className="text-xl font-bold mb-6">⭐ Featured Projects</div>
+      <div className="text-2xl font-bold mb-6">⭐ Featured Projects</div>
       <div className="grid gap-6 md:grid-cols-2">
         {featuredProjects.map((project) => (
           <ProjectCard key={project.id} project={project} />
