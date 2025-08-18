@@ -27,3 +27,8 @@ export type BlogPageDetailPageProps = {
   postMeta: PostMeta;
   markDown: string;
 };
+
+export type PostFilterProps = {
+  searchQuery: string;
+  onSearchChange: (value: string)=>void
+}
