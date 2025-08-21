@@ -1,5 +1,6 @@
 export type Project = {
   id: string;
+  documentId: string;
   title: string;
   description: string;
   image: string;
@@ -30,5 +31,26 @@ export type BlogPageDetailPageProps = {
 
 export type PostFilterProps = {
   searchQuery: string;
-  onSearchChange: (value: string)=>void
-}
+  onSearchChange: (value: string) => void;
+};
+
+export type StrapiProject = {
+  id: string;
+  documentId: string;
+  title: string;
+  description: string;
+  url: string;
+  date: string;
+  category: string;
+  featured: boolean;
+  image: {
+    name?: string;
+    url: string;
+    formats?: {
+      large?: { url: string };
+      small?: { url: string };
+      medium?: { url: string };
+      thumbnail?: { url: string };
+    };
+  };
+};

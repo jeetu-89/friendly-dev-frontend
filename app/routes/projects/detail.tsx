@@ -12,7 +12,7 @@ export function meta({}:Route.MetaArgs){
   ]
 }
 
-export async function clientLoader({request, params}:Route.ClientLoaderArgs) {
+export async function loader({request, params}:Route.LoaderArgs) {
 
     const res = await fetch(`${API_URL}/projects/${params.id}`);
     if(!res.ok) throw new Response('Project not found', {status: 404});
@@ -22,9 +22,9 @@ export async function clientLoader({request, params}:Route.ClientLoaderArgs) {
 
 } 
 
-export function HydrateFallback(){
-    return <div>Loading ...</div>
-}
+// export function HydrateFallback(){
+//     return <div>Loading ...</div>
+// }
 const ProjectDetailPage = ({loaderData}: Route.ComponentProps) => {
 
 

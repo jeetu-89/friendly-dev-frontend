@@ -4,7 +4,7 @@ import { Link } from "react-router";
 const ProjectCard = ({ project }: { project: Project }) => {
   return (
     <Link
-      to={`/projects/${project.id}`}
+      to={`/projects/${project.documentId}`}
       className="block transform transition hover:scale-105 active:scale-102"
     >  
       <div className="bg-gray-800 border border-gray-700 rounded-lg shadow-sm hover:shadow-xl transition">
