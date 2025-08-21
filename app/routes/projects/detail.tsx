@@ -32,7 +32,7 @@ export async function loader({request, params}:Route.LoaderArgs) {
     category: item.category,
     featured: item.featured,
     image: item.image?.url
-      ? `${STRAPI_URL}${item.image.url}`
+      ? `${item.image.url}`
       : "/images/no-image.png",
     }
     

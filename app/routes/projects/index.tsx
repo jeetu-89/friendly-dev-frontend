@@ -24,7 +24,7 @@ export async function loader({
     category: item.category,
     featured: item.featured,
     image: item.image?.url
-      ? `${STRAPI_URL}${item.image.url}`
+      ? `${item.image.url}`
       : "/images/no-image.png",
   }));
   projects.forEach((project)=>console.log(project.image))

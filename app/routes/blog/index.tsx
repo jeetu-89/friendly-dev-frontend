@@ -29,7 +29,7 @@ export async function loader({
     excerpt: item.excerpt,
     date: item.date,
     image: item.image?.url
-     ? `${STRAPI_URL}${item.image.url}`
+     ? `${item.image.url}`
      : 'images/no-image.png'
   }))
   // posts.sort(

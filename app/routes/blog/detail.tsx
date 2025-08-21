@@ -35,7 +35,7 @@ export async function loader({
     date: item.date,
     body: item.body,
     image: item.image?.url
-      ? `${STRAPI_URL}${item.image.url}`
+      ? `${item.image.url}`
       : "/images/no-image.png",
   };
   // const postsMeta: Post[] = await res.json();
