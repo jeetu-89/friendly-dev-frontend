@@ -34,6 +34,10 @@ export type PostFilterProps = {
   onSearchChange: (value: string) => void;
 };
 
+export type StrapiResponse<T> = {
+  data: T[];
+};
+
 export type StrapiProject = {
   id: string;
   documentId: string;
