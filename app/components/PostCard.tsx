@@ -1,6 +1,7 @@
 import type React from "react";
 import type { PostMeta } from "~/types";
 import { Link } from "react-router";
+import { img } from "framer-motion/client";
 
 const PostCard: React.FC<{ post: PostMeta }> = ({ post }) => {
   return (
@@ -10,6 +11,9 @@ const PostCard: React.FC<{ post: PostMeta }> = ({ post }) => {
       <p className="text-sm text-gray-400 mb-2">
         {new Date(post.date).toDateString()}
       </p>
+      {post.image && (
+        <img className="w-full h-48 object-cover rounded mb-4" src={post.image} alt={post.title} />
+      )}
 
       <p className="text-gray-200 mb-2">{post.excerpt}</p>
 

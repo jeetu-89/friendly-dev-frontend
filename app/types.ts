@@ -22,6 +22,8 @@ export type PostMeta = {
   slug: string;
   excerpt: string;
   date: string;
+  image: string;
+  documentId: string;
 };
 
 export type BlogPageDetailPageProps = {
@@ -36,6 +38,25 @@ export type PostFilterProps = {
 
 export type StrapiResponse<T> = {
   data: T[];
+};
+
+export type StrapiPost = {
+  id: string;
+  documentId: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  body: string;
+  date: string;
+  image: {
+    url: string;
+    formats?: {
+      large?: { url: string };
+      small?: { url: string };
+      medium?: { url: string };
+      thumbnail?: { url: string };
+    };
+  };
 };
 
 export type StrapiProject = {

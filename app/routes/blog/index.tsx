@@ -1,6 +1,6 @@
 //Types
 import type { Route } from "./+types/index";
-import type { PostMeta } from "~/types";
+import type { PostMeta, StrapiPost, StrapiResponse } from "~/types";
 
 import { Link } from "react-router";
 import PostList from "~/components/PostList";
@@ -8,21 +8,35 @@ import { useEffect, useRef, useState } from "react";
 import Pagination from "~/components/Pagination";
 import PostFilter from "~/components/PostFilter";
 
+const API_URL = import.meta.env.VITE_API_URL;
+const STRAPI_URL = import.meta.env.VITE_STRAPI_URL;
+
 export async function loader({
   request,
 }: Route.LoaderArgs): Promise<{ posts: PostMeta[] }> {
-  const url = new URL("/posts-meta.json", request.url);
+  // const url = new URL("/posts-meta.json", request.url);
   // console.log(url.href)
-  const res = await fetch(url.href);
+  const res = await fetch(`${API_URL}/posts?populate=*&sort=date:desc`);
   if (!res.ok) throw new Error("Failed to fetch data");
 
-  const data = await res.json();
-  data.sort(
-    (a: PostMeta, b: PostMeta) =>
-      new Date(b.date).getTime() - new Date(a.date).getTime()
-  );
+  const json: StrapiResponse<StrapiPost> = await res.json();
+  const posts: PostMeta[] = json.data.map((item)=>({
+    id: item.id,
+    documentId: item.documentId,
+    title: item.title,
+    slug: item.slug,
+    excerpt: item.excerpt,
+    date: item.date,
+    image: item.image?.url
+     ? `${STRAPI_URL}${item.image.url}`
+     : 'images/no-image.png'
+  }))
+  // posts.sort(
+  //   (a: PostMeta, b: PostMeta) =>
+  //     new Date(b.date).getTime() - new Date(a.date).getTime()
+  // );
 
-  return { posts: data };
+  return { posts: posts };
 }
 
 const BlogPage = ({ loaderData }: Route.ComponentProps) => {

@@ -6,7 +6,7 @@ const AboutPage = () => {
       {/* Intro */}
       <div className="flex flex-col gap-10 items-center md:flex-row md:items-start text-center md:text-start mb-12">
         <img
-          src="../public/images/profile.jpg"
+          src="/images/profile.jpg"
           alt="profile"
           className="w-40 h-40 object-cover rounded-full border-4 border-blue-500"
         />

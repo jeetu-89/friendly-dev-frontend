@@ -27,6 +27,7 @@ export async function loader({
       ? `${STRAPI_URL}${item.image.url}`
       : "/images/no-image.png",
   }));
+  projects.forEach((project)=>console.log(project.image))
   return { projects };
 }
 

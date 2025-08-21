@@ -1,5 +1,6 @@
 import type { Project } from "~/types";
 import ProjectCard from "./ProjectCard";
+import { div } from "framer-motion/client";
 
 type FeaturedProjectsProps = {
   projects: Project[];
@@ -7,17 +8,18 @@ type FeaturedProjectsProps = {
 };
 
 const FeaturedProjects = ({ projects, count = 4 }: FeaturedProjectsProps) => {
-  const featuredProjects = projects
-    .filter((project) => project.featured)
-    .slice(0, count);
   return (
     <section>
-      <div className="text-2xl font-bold mb-6">⭐ Featured Projects</div>
-      <div className="grid gap-6 md:grid-cols-2">
-        {featuredProjects.map((project) => (
-          <ProjectCard key={project.id} project={project} />
-        ))}
-      </div>
+      {projects.length > 0 && (
+        <>
+          <div className="text-2xl font-bold mb-6">⭐ Featured Projects</div>
+          <div className="grid gap-6 md:grid-cols-2">
+            {projects.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </div>
+        </>
+      )}
     </section>
   );
 };
