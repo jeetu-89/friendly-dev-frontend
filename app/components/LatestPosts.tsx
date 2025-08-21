@@ -26,6 +26,7 @@ const LatestPosts = ({
             key={post.slug}
           >
             <h3 className="text-blue-300 font-semibold mb-2">{post.title}</h3>
+            <img src={post.image} className="w-full h-24 object-cover mb-2" />
             <p className="text-sm text-gray-300">{post.excerpt}</p>
             <p className="text-xs my-2 text-gray-400">
               {new Date(post.date).toDateString()}

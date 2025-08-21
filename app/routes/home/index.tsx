@@ -2,7 +2,12 @@
 // import { Welcome } from "../welcome/welcome";
 // import Hero from "~/components/Hero";
 import type { Route } from "./+types/index";
-import type { Project, StrapiProject, StrapiResponse } from "~/types";
+import type {
+  Project,
+  StrapiPost,
+  StrapiProject,
+  StrapiResponse,
+} from "~/types";
 import type { Post } from "~/types";
 
 import LatestPosts from "~/components/LatestPosts";
@@ -19,15 +24,17 @@ export async function loader({
 
   const [projectsRes, postsRes] = await Promise.all([
     fetch(`${API_URL}/projects?populate=*&filters[featured][$eq]=true`),
-    fetch(url.href),
+    fetch(`${API_URL}/posts?populate=*&sort=date:desc`),
   ]);
 
   if (!projectsRes || !postsRes) throw new Error("Failed to fetch data!");
 
-  const [projectsJson, posts]: [StrapiResponse<StrapiProject>, Post[]] =
-    await Promise.all([projectsRes.json(), postsRes.json()]);
-  const items = projectsJson.data;
-  const projects: Project[] = items.map((item) => ({
+  const [projectsJson, postsJson]: [
+    StrapiResponse<StrapiProject>,
+    StrapiResponse<StrapiPost>,
+  ] = await Promise.all([projectsRes.json(), postsRes.json()]);
+  const projectItems = projectsJson.data;
+  const projects: Project[] = projectItems.map((item) => ({
     id: item.id,
     documentId: item.documentId,
     title: item.title,
@@ -36,6 +43,19 @@ export async function loader({
     date: item.date,
     category: item.category,
     featured: item.featured,
+    image: item.image?.url
+      ? `${STRAPI_URL}${item.image.url}`
+      : "/images/no-image.png",
+  }));
+
+  const postItems = postsJson.data;
+  const posts: Post[] = postItems.map((item) => ({
+    id: item.id,
+    slug: item.slug,
+    excerpt: item.excerpt,
+    title: item.title,
+    date: item.date,
+    body: item.body,
     image: item.image?.url
       ? `${STRAPI_URL}${item.image.url}`
       : "/images/no-image.png",
@@ -55,7 +75,7 @@ const Home = ({ loaderData }: Route.ComponentProps) => {
 
   return (
     <>
-      <FeaturedProjects projects={projects} count={2}/>
+      <FeaturedProjects projects={projects} count={2} />
       <LatestPosts posts={posts} limit={5} />
       <AboutPreview />
     </>

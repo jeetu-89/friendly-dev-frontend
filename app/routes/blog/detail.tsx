@@ -3,7 +3,6 @@ import { Link } from "react-router";
 
 import type { Route } from "./+types/detail";
 import type { Post, StrapiPost, StrapiResponse } from "~/types";
-import type { BlogPageDetailPageProps } from "~/types";
 import { image } from "framer-motion/client";
 
 const API_URL = import.meta.env.VITE_API_URL;
