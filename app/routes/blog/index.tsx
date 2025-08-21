@@ -1,6 +1,6 @@
 //Types
 import type { Route } from "./+types/index";
-import type { PostMeta, StrapiPost, StrapiResponse } from "~/types";
+import type { Post, StrapiPost, StrapiResponse } from "~/types";
 
 import { Link } from "react-router";
 import PostList from "~/components/PostList";
@@ -13,15 +13,16 @@ const STRAPI_URL = import.meta.env.VITE_STRAPI_URL;
 
 export async function loader({
   request,
-}: Route.LoaderArgs): Promise<{ posts: PostMeta[] }> {
+}: Route.LoaderArgs): Promise<{ posts: Post[] }> {
   // const url = new URL("/posts-meta.json", request.url);
   // console.log(url.href)
   const res = await fetch(`${API_URL}/posts?populate=*&sort=date:desc`);
   if (!res.ok) throw new Error("Failed to fetch data");
 
   const json: StrapiResponse<StrapiPost> = await res.json();
-  const posts: PostMeta[] = json.data.map((item)=>({
+  const posts: Post[] = json.data.map((item)=>({
     id: item.id,
+    body: item.body,
     documentId: item.documentId,
     title: item.title,
     slug: item.slug,
@@ -32,7 +33,7 @@ export async function loader({
      : 'images/no-image.png'
   }))
   // posts.sort(
-  //   (a: PostMeta, b: PostMeta) =>
+  //   (a: Post, b: Post) =>
   //     new Date(b.date).getTime() - new Date(a.date).getTime()
   // );
 
@@ -47,7 +48,7 @@ const BlogPage = ({ loaderData }: Route.ComponentProps) => {
   const allPosts = useRef(loaderData.posts);
 
   useEffect(()=>{
-    const filteredPosts: PostMeta[] = allPosts.current.filter(
+    const filteredPosts: Post[] = allPosts.current.filter(
       (post) =>
         post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         post.excerpt.toLocaleLowerCase().includes(searchQuery.toLocaleLowerCase())

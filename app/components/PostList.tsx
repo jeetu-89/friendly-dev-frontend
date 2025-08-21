@@ -1,9 +1,9 @@
 import type React from "react";
 import PostCard from "./PostCard";
 
-import type { PostMeta } from "~/types";
+import type { Post } from "~/types";
 
-const PostList: React.FC<{posts: PostMeta[] }> = ({posts}) => {
+const PostList: React.FC<{posts: Post[] }> = ({posts}) => {
 
   return (
     <div>

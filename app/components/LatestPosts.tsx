@@ -1,4 +1,4 @@
-import type { PostMeta } from "~/types";
+import type { Post } from "~/types";
 
 import { Link } from "react-router";
 
@@ -6,11 +6,11 @@ const LatestPosts = ({
   posts,
   limit = 3,
 }: {
-  posts: PostMeta[];
+  posts: Post[];
   limit: number;
 }) => {
   const sortedPosts = posts.sort(
-    (a: PostMeta, b: PostMeta) =>
+    (a: Post, b: Post) =>
       new Date(b.date).getTime() - new Date(a.date).getTime()
   );
   

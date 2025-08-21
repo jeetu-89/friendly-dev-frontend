@@ -16,20 +16,20 @@ export type PaginationProps = {
   onPageChange: (page: number) => void;
 };
 
-export type PostMeta = {
+export type Post = {
   id: string;
   title: string;
   slug: string;
   excerpt: string;
   date: string;
   image: string;
-  documentId: string;
+  body: string;
 };
 
-export type BlogPageDetailPageProps = {
-  postMeta: PostMeta;
-  markDown: string;
-};
+// export type BlogPageDetailPageProps = {
+//   postMeta: Post;
+//   markDown: string;
+// };
 
 export type PostFilterProps = {
   searchQuery: string;

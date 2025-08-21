@@ -3,7 +3,7 @@
 // import Hero from "~/components/Hero";
 import type { Route } from "./+types/index";
 import type { Project, StrapiProject, StrapiResponse } from "~/types";
-import type { PostMeta } from "~/types";
+import type { Post } from "~/types";
 
 import LatestPosts from "~/components/LatestPosts";
 import FeaturedProjects from "~/components/FeaturedProjects";
@@ -14,7 +14,7 @@ const STRAPI_URL = import.meta.env.VITE_STRAPI_URL;
 
 export async function loader({
   request,
-}: Route.LoaderArgs): Promise<{ projects: Project[]; posts: PostMeta[] }> {
+}: Route.LoaderArgs): Promise<{ projects: Project[]; posts: Post[] }> {
   const url = new URL("/posts-meta.json", request.url);
 
   const [projectsRes, postsRes] = await Promise.all([
@@ -24,7 +24,7 @@ export async function loader({
 
   if (!projectsRes || !postsRes) throw new Error("Failed to fetch data!");
 
-  const [projectsJson, posts]: [StrapiResponse<StrapiProject>, PostMeta[]] =
+  const [projectsJson, posts]: [StrapiResponse<StrapiProject>, Post[]] =
     await Promise.all([projectsRes.json(), postsRes.json()]);
   const items = projectsJson.data;
   const projects: Project[] = items.map((item) => ({
