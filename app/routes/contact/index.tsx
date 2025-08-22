@@ -35,7 +35,7 @@ import type { Route } from "./+types";
 const ContactPage = ({ actionData }: Route.ComponentProps) => {
   // const errors = actionData?.errors ?? {};
   return (
-    <div className="max-w-3xl bg-gray-900 py-10 px-6 rounded">
+    <div className="max-w-3xl bg-gray-900 py-10 px-6 rounded mx-auto">
       <h2 className="text-3xl font-bold text-center mb-8">Contact me</h2>
 
       {/* {actionData?.message ? (
